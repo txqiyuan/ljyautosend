@@ -1,0 +1,64 @@
+
+#打印sql语句
+#mybatis.configuration.log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 9568
+  servlet:
+    context-path: /
+
+alex:
+  port: 8896
+
+file:
+  image-path: /myimages
+
+
+spring:
+  resources: # 指定静态资源的路径
+    static-locations: classpath:/static/,classpath:/templates/,classpath:/layui/,file:${file.image-path}
+  datasource:
+    #服务器数据库
+    url: jdbc:mysql://117.176.184.118:8366/demo_sl2.2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    #url: jdbc:mysql:///demo_sl2.2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    username: root
+    password: 123456
+    #password: 1234
+    driver-class-name: com.mysql.jdbc.Driver
+    #使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+
+  #Redis 配置
+  #Redis数据库索引（默认为0）
+  redis:
+    database: 1
+    #Redis服务器地址
+    host: 117.176.184.118
+    #host: 127.0.0.1
+    #Redis服务器连接端口
+    port: 6379
+    #Redis服务器连接密码（默认为空）
+    password: alex20106364
+    #连接超时时间（毫秒）
+    timeout: 100
+    jedis:
+      pool:
+        #连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        #连接池中的最大空闲连接
+        max-idle: 8
+        #连接池中的最小空闲连接
+        min-idle: 3
+
+#日志打印
+logging:
+  file:
+    name:
+    path: G:/alex/log
+    #path: D:/alex/log
+  #日志级别
+  level:
+    web: info
+#日志输出地址
+#logging.file: log\\myboot.log

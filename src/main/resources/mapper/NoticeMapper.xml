@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.NoticeMapper" >
+
+    <!--SELECT resa.id id, resa.stcd stcd, resa.pj pj, resa.z z,resa.vj vj,resa.va va, resa.q q,
+         resc.stnm stname, resa.tm tm from
+        (SELECT IFNULL(fw2.id,fw1.id) id, fw1.stcd,fw2.vj,fw2.va,fw2.q, fw1.pj pj, fw2.z z, IFNULL(fw2.tm,fw1.tm) tm from
+        (SELECT id, stcd,FORMAT(IFNULL(SUM(PN05),0),1) as pj,z,vj,va,q,tm from ${tabname} sa where
+        tm > (SELECT CASE WHEN DATE_FORMAT(NOW(),'%H') > 8 THEN
+        FROM_UNIXTIME(UNIX_TIMESTAMP(CAST(SYSDATE()AS DATE) + INTERVAL 8 HOUR))
+        ELSE FROM_UNIXTIME(UNIX_TIMESTAMP(CAST(SYSDATE()AS DATE) - INTERVAL 1 DAY + INTERVAL 8 HOUR)) END) and
+        tm &lt;= (SELECT CONCAT((SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d ')),(select DATE_FORMAT(NOW(),'%H')),":00:00"))
+        GROUP BY stcd) fw1
+        LEFT JOIN
+        (SELECT * from ${tabname} where
+        tm > (SELECT CASE WHEN DATE_FORMAT(NOW(),'%H') > 8 THEN
+        FROM_UNIXTIME(UNIX_TIMESTAMP(CAST(SYSDATE()AS DATE) + INTERVAL 8 HOUR))
+        ELSE FROM_UNIXTIME(UNIX_TIMESTAMP(CAST(SYSDATE()AS DATE) - INTERVAL 1 DAY + INTERVAL 8 HOUR)) END)
+        and z is not null
+        order by tm desc limit 2) fw2
+        ON fw1.stcd = fw2.stcd) resa,
+        st_stbprp_b resc
+        where resa.stcd = resc.stcd order by resa.stcd asc-->
+	<select id="getlist" resultType="com.model.MessageVo" parameterType="string">
+        SELECT resa.id id, resa.stcd stcd, resa.pj pj, resa.z z,resa.vj vj,resa.va va, resa.q q,resc.stnm stname, resa.tm tm
+        FROM (SELECT id, stcd,FORMAT(IFNULL(SUM(PN05),0),1) as pj,z,vj,va,q,tm
+        FROM (SELECT * from ${tabname} sa where sa.tm > (SELECT CASE WHEN DATE_FORMAT(NOW(),'%H') > 8 THEN
+        FROM_UNIXTIME(UNIX_TIMESTAMP(CAST(SYSDATE()AS DATE) + INTERVAL 8 HOUR))
+        ELSE FROM_UNIXTIME(UNIX_TIMESTAMP(CAST(SYSDATE()AS DATE) - INTERVAL 1 DAY + INTERVAL 8 HOUR)) END) and
+        sa.tm &lt;= (SELECT CONCAT((SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d ')),(select DATE_FORMAT(NOW(),'%H')),":00:00"))
+        ORDER BY sa.tm DESC) sg
+        GROUP BY sg.stcd) resa,
+        st_stbprp_b resc
+        where resa.stcd = resc.stcd order by resa.stcd asc
+    </select>
+
+    <select id="issended" resultType="int" parameterType="com.model.MessageVo">
+        select count(*) from alex_wxpushlog where
+        stcd = #{stcd} and (tm >= DATE_SUB(NOW(),INTERVAL  30 MINUTE))
+    </select>
+
+	<select id="getopenids" resultType="com.model.Openid">
+        select * from alex_openid where state = 1;
+    </select>
+
+    <select id="getupq" resultType="com.model.Alexhqline">
+        select * from alex_hqline where z &lt;= #{z} order by z desc limit 1;
+    </select>
+
+    <select id="getdownq" resultType="com.model.Alexhqline">
+        select * from alex_hqline where z &gt;= #{z} order by z asc limit 1;
+    </select>
+
+    <select id="getperson" resultType="com.model.StAlarmPerson">
+        select * from st_alarmperson
+    </select>
+
+    <insert id="addwxpushlog" parameterType="com.model.MessageVo">
+        insert into alex_wxpushlog(id,username,phone,stcd,stname,content,pj,pn05,z,zb,zu,waterRanges,rainRanges,tm)
+        values(null,#{username},#{phone},#{stcd},#{stname},#{content},#{pj},#{pn05},#{z},#{zb},#{zu},#{waterRanges},#{rainRanges},#{tm})
+    </insert>
+    <insert id="addmeslog" parameterType="com.model.MessageVo">
+        insert into st_alarmsmssendlog(id,username,phone,content,tm)
+        values(#{id},#{username},#{phone},#{content},#{tm})
+    </insert>
+</mapper>

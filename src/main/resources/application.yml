@@ -1,0 +1,25 @@
+
+spring.thymeleaf.prefix: classpath:/templates/
+
+#主配置
+spring:
+  #dev|test|pro
+  profiles:
+    active: pro
+  #servlet设置
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
+
+#mybatis
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+  typeAliasesPackage: com.model.**
+#mybatis.configuration.cache-enabled: true

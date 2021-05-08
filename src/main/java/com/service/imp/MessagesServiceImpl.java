@@ -20,7 +20,7 @@ public class MessagesServiceImpl implements MessagesService {
     @Override
     public List<MessageVo> getvopjz1(String tabname) {
         List<MessageVo> list = new ArrayList<>();
-         list = messagesMapper.getvopjz1(tabname);
+        list = messagesMapper.getvopjz1(tabname);
         if (list.size() == 0){
             list = messagesMapper.getvopj2(tabname);
             if (list.size() == 0){

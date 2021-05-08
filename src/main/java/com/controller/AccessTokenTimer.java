@@ -92,6 +92,7 @@ public class AccessTokenTimer {
     public static String wchatexeaddr1 = "C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe";
 
     public static String wchatexeaddr2 = "F:\\app\\Tencent\\WeChat\\WeChat.exe";
+    //public static String wchatexeaddr2 = "D:\\360软件\\WeChat\\WeChat.exe";
 
     /**
      * 使用Robot类 模拟安键输入Ctrl+F和Enter查找指定用户

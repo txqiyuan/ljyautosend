@@ -87,6 +87,12 @@ public class AccessTokenTimer {
 
     public static Robot robot;
 
+    public static final Runtime runtime = Runtime.getRuntime();
+
+    public static String wchatexeaddr1 = "C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe";
+
+    public static String wchatexeaddr2 = "F:\\app\\Tencent\\WeChat\\WeChat.exe";
+
     /**
      * 使用Robot类 模拟安键输入Ctrl+F和Enter查找指定用户
      */
@@ -133,7 +139,6 @@ public class AccessTokenTimer {
      * 定时器：需要在spring配置中开启定时任务扫描
      * 早8点
      */
-    //@Scheduled(cron = "28 1 8 * * ? ")
     //@Scheduled(cron = "30 1 8 * * ? ")
     public void timerfortask1() throws IOException {
         List<Openid> openids = new ArrayList<>();
@@ -209,7 +214,6 @@ public class AccessTokenTimer {
      * 中午两点
      * @throws IOException
      */
-    //@Scheduled(cron = "28 1 8 * * ? ")
     //@Scheduled(cron = "30 1 14 * * ? ")
     public void timerfortask2() throws IOException {
         List<Openid> openids = new ArrayList<>();
@@ -285,7 +289,6 @@ public class AccessTokenTimer {
      * 晚8点
      * @throws IOException
      */
-    //@Scheduled(cron = "28 1 8 * * ? ")
     //@Scheduled(cron = "30 1 20 * * ? ")
     public void timerfortask3() throws IOException {
         List<Openid> openids = new ArrayList<>();
@@ -410,7 +413,7 @@ public class AccessTokenTimer {
                     //微信群推送
                     try {
                         //将wx置于前面，防止失去焦点
-                        getwxscreen();
+                        openWehat();
                         copy(wxmescon);
                         alexCtrlWithV('V');
                         alexEnter();
@@ -481,7 +484,7 @@ public class AccessTokenTimer {
                 //自动发送
                 try {
                     //将wx置于前面，防止失去焦点
-                    getwxscreen();
+                    openWehat();
                     copy(phonemescon);
                     alexCtrlWithV('V');
                     alexEnter();
@@ -593,15 +596,10 @@ public class AccessTokenTimer {
 
     //------------------jna方式调用系统api----------------------------------------------
     static {
-        WinDef.HWND hwnd = User32.INSTANCE.FindWindow(null, "微信");
-        if (hwnd == null) {
-            System.out.println("not running");
-        } else {
-            User32.INSTANCE.ShowWindow(hwnd, 9);
-            User32.INSTANCE.SetForegroundWindow(hwnd);   // bring to front
-        }
+        openWehat();
     }
 
+    //此方法废弃
     public static void getwxscreen(){
         WinDef.HWND hwnd = User32.INSTANCE.FindWindow(null, "微信");
         if (hwnd == null) {
@@ -617,7 +615,7 @@ public class AccessTokenTimer {
         if (con != null){
             try {
                 //将wx置于前面，防止失去焦点
-                getwxscreen();
+                openWehat();
                 copy(con);
                 alexCtrlWithV('V');
                 alexEnter();
@@ -667,7 +665,7 @@ public class AccessTokenTimer {
         if (alexnowcon != null){
             try {
                 //将wx置于前面，防止失去焦点
-                getwxscreen();
+                openWehat();
                 copy(alexnowcon);
                 alexCtrlWithV('V');
                 alexEnter();
@@ -679,8 +677,8 @@ public class AccessTokenTimer {
         if (alexonehourcon != null){
             try {
                 //将wx置于前面，防止失去焦点
-                getwxscreen();
-                Thread.sleep(6000);
+                openWehat();
+                Thread.sleep(5000);
                 copy(alexonehourcon);
                 alexCtrlWithV('V');
                 alexEnter();
@@ -692,8 +690,8 @@ public class AccessTokenTimer {
         if (alex20tonowcon != null){
             try {
                 //将wx置于前面，防止失去焦点
-                getwxscreen();
-                Thread.sleep(6000);
+                openWehat();
+                Thread.sleep(5000);
                 copy(alex20tonowcon);
                 alexCtrlWithV('V');
                 alexEnter();
@@ -702,6 +700,8 @@ public class AccessTokenTimer {
             }
         }
     }
+
+//**************************************robot模拟键盘操作******************************************
 
     //将需要输入的内容复制到裁剪版
     public static void copy(String text) {
@@ -720,7 +720,7 @@ public class AccessTokenTimer {
 
         }
         robot.keyPress(KeyEvent.VK_CONTROL);
-        sendKey(c);
+        pressKey(c);
         robot.keyRelease(KeyEvent.VK_CONTROL);
     }
 
@@ -735,7 +735,7 @@ public class AccessTokenTimer {
         robot.keyRelease(KeyEvent.VK_ENTER);
     }
 
-    public static void sendKey(char c) {
+    public static void pressKey(char c) {
         try {
             String KeyName = (c+"").toUpperCase();
             Field f = KeyEvent.class.getDeclaredField("VK_" + KeyName);
@@ -747,6 +747,40 @@ public class AccessTokenTimer {
             e.printStackTrace();
         }
     }
+
+    /**ctrl+alt+w 打开微信（窗口）
+     *
+     * 暂时未用，下有更好的方法
+     */
+    public static void openwx(){
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+
+        }
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_ALT);
+        pressKey('V');
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        robot.keyRelease(KeyEvent.VK_ALT);
+    }
+
+    /**
+     * 打开微信
+     *
+     */
+    public static void openWehat() {
+        Process process = null;
+        try {
+            process = runtime.exec(wchatexeaddr2);
+        } catch (final Exception e) {
+            logger.info("打开微信执行失败!");
+        }
+    }
+
+//**************************************robot模拟键盘操作******************************************
+
 
     public String alexnow(){
         List<MessageVo> messageVo = new ArrayList<>();
@@ -960,7 +994,6 @@ public class AccessTokenTimer {
         return f1;
     }
 
-
     /**
      * 使用redis 缓存accesstoken
      * @return
@@ -1098,10 +1131,15 @@ public class AccessTokenTimer {
     }
 
     public static void main(String[] args) throws Exception {
-        List<String> ph = new ArrayList<>();
+        /*List<String> ph = new ArrayList<>();
         //ph.add("18628905593");
         ph.add("13980024835");
         String content = "李家岩水情-铁索站站点测量降雨量(雨量157.5mm，水位768.1)超过预警值30mm(水位768m)，请注意关注和防范山洪和其次生灾害！";
-        PhoneMessage.messageJST(ph,content);
+        PhoneMessage.messageJST(ph,content);*/
+        openWehat();
+        System.out.println("第一次");
+        Thread.sleep(10000);
+        openWehat();
+        System.out.println("第二次");
     }
 }

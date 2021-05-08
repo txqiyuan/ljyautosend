@@ -1,40 +1,45 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en">
-<script type="text/javascript" charset="utf-8" src="jquery-1.8.1.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="layui/layui.js"></script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
-<link rel="stylesheet" href="layui/css/layui.css">
-<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
-<!--[if lt IE 9]>
-<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+<head>
+    <script type="text/javascript" charset="utf-8" src="jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="layui/layui.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <title>成都李家岩水库水雨情数据推送</title>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        /*.myalex{
+            width: 350px;
+            margin-left: 30%;
+            margin-top: 20%;
+            font-size: 30px;
+        }*/
+        .alex-fontsize{
+            font-size: 2em;
+        }
+        .juzhong{
+            text-align: center;
+        }
+        .alex-button{
+            height: 60px;
+            line-height: 60px;
+            font-size: 1em;
+        }
+        .alex-display-block{
+            display: none;
+        }
+        body{
+            background-color: #f4ecff;
+        }
+    </style>
+</head>
+
 <body>
-<style>
-    /*.myalex{
-        width: 350px;
-        margin-left: 30%;
-        margin-top: 20%;
-        font-size: 30px;
-    }*/
-    .alex-fontsize{
-        font-size: 2em;
-    }
-    .juzhong{
-        text-align: center;
-    }
-    .alex-button{
-        height: 60px;
-        line-height: 60px;
-        font-size: 1em;
-    }
-    .alex-display-block{
-        display: none;
-    }
-    body{
-        background-color: #f4ecff;
-    }
-</style>
+
 <div class="container" style="padding: 20px;">
     <div class="layui-row juzhong alex-fontsize" style="margin-top: 200px;padding-bottom: 10px;">
         <button id="alex-copy-data" type="button" class="layui-btn-lg layui-btn alex-now-datacopy alex-button">复  制</button>

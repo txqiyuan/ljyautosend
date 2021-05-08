@@ -94,24 +94,48 @@ public class AlexController {
                 if (n==messageVo.size()-1){
                     if ("0066668806".equals(messageVo.get(n).getStcd())){
                         if (messageVo.get(n).getZ() >= 770){
+                            //有雨量
                             c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s(770m流量)," + c1;
+                            //无雨量
+                            //c1 = messageVo.get(n).getStname() + "水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s(770m流量)," + c1;
                         }else {
+                            //有雨量
                             c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s," + c1;
+                            //无雨量
+                            //c1 = messageVo.get(n).getStname() + "水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s," + c1;
                         }
                     }else if ("0066668805".equals(messageVo.get(n).getStcd())){
-                        c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m," + c1;
+                        if (messageVo.get(n).getZ() != null){
+                            //有水位
+                            c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + gettwoq(messageVo.get(n).getZ()) + "m," + c1;
+                        }else {
+                            //无水位
+                            c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm," + c1;
+                        }
                     }else {
                         c1 += messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm.";
                     }
                 }else {
                     if ("0066668806".equals(messageVo.get(n).getStcd())){
                         if (messageVo.get(n).getZ() >= 770){
+                            //有雨量
                             c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s(770m流量)," + c1;
+                            //无雨量
+                            //c1 = messageVo.get(n).getStname() + "水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s(770m流量)," + c1;
                         }else {
+                            //有雨量
                             c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s," + c1;
+                            //无雨量
+                            //c1 = messageVo.get(n).getStname() + "水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s," + c1;
                         }
                     }else if ("0066668805".equals(messageVo.get(n).getStcd())){
-                        c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m," + c1;
+                        if (messageVo.get(n).getZ() != null){
+                            //有水位
+                            c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + gettwoq(messageVo.get(n).getZ()) + "m," + c1;
+                        }else {
+                            //无水位
+                            c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm," + c1;
+                        }
                     }else {
                         c1 += messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm,";
                     }
@@ -145,24 +169,48 @@ public class AlexController {
                 if (n==messageVo.size()-1){
                     if ("0066668806".equals(messageVo.get(n).getStcd())){
                         if (messageVo.get(n).getZ() >= 770){
+                            //有雨量
                             c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s(770m流量)," + c1;
+                            //无雨量
+                            //c1 = messageVo.get(n).getStname() + "水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s(770m流量)," + c1;
                         }else {
+                            //有雨量
                             c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s," + c1;
+                            //无雨量
+                            //c1 = messageVo.get(n).getStname() + "水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s," + c1;
                         }
                     }else if ("0066668805".equals(messageVo.get(n).getStcd())){
-                        c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m," + c1;
+                        if (messageVo.get(n).getZ() != null){
+                            //有水位
+                            c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + gettwoq(messageVo.get(n).getZ()) + "m," + c1;
+                        }else {
+                            //无水位
+                            c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm," + c1;
+                        }
                     }else {
                         c1 += messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm.";
                     }
                 }else {
                     if ("0066668806".equals(messageVo.get(n).getStcd())){
                         if (messageVo.get(n).getZ() >= 770){
+                            //有雨量
                             c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s(770m流量)," + c1;
+                            //无雨量
+                            //c1 = messageVo.get(n).getStname() + "水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s(770m流量)," + c1;
                         }else {
+                            //有雨量
                             c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s," + c1;
+                            //无雨量
+                            //c1 = messageVo.get(n).getStname() + "水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s," + c1;
                         }
                     }else if ("0066668805".equals(messageVo.get(n).getStcd())){
-                        c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m," + c1;
+                        if (messageVo.get(n).getZ() != null){
+                            //有水位
+                            c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + gettwoq(messageVo.get(n).getZ()) + "m," + c1;
+                        }else {
+                            //无水位
+                            c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm," + c1;
+                        }
                     }else {
                         c1 += messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm,";
                     }
@@ -196,24 +244,48 @@ public class AlexController {
                 if (n==messageVo.size()-1){
                     if ("0066668806".equals(messageVo.get(n).getStcd())){
                         if (messageVo.get(n).getZ() >= 770){
+                            //有雨量
                             c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s(770m流量)," + c1;
+                            //无雨量
+                            //c1 = messageVo.get(n).getStname() + "水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s(770m流量)," + c1;
                         }else {
+                            //有雨量
                             c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s," + c1;
+                            //无雨量
+                            //c1 = messageVo.get(n).getStname() + "水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s," + c1;
                         }
                     }else if ("0066668805".equals(messageVo.get(n).getStcd())){
-                        c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m," + c1;
+                        if (messageVo.get(n).getZ() != null){
+                            //有水位
+                            c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + gettwoq(messageVo.get(n).getZ()) + "m," + c1;
+                        }else {
+                            //无水位
+                            c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm," + c1;
+                        }
                     }else {
                         c1 += messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm.";
                     }
                 }else {
                     if ("0066668806".equals(messageVo.get(n).getStcd())){
                         if (messageVo.get(n).getZ() >= 770){
+                            //有雨量
                             c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s(770m流量)," + c1;
+                            //无雨量
+                            //c1 = messageVo.get(n).getStname() + "水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s(770m流量)," + c1;
                         }else {
+                            //有雨量
                             c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s," + c1;
+                            //无雨量
+                            //c1 = messageVo.get(n).getStname() + "水位" + messageVo.get(n).getZ() + "m" + " / 流量" + getq(messageVo.get(n).getZ()) + "m³/s," + c1;
                         }
                     }else if ("0066668805".equals(messageVo.get(n).getStcd())){
-                        c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + messageVo.get(n).getZ() + "m," + c1;
+                        if (messageVo.get(n).getZ() != null){
+                            //有水位
+                            c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm" + " / 水位" + gettwoq(messageVo.get(n).getZ()) + "m," + c1;
+                        }else {
+                            //无水位
+                            c1 = messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm," + c1;
+                        }
                     }else {
                         c1 += messageVo.get(n).getStname() + messageVo.get(n).getPj() + "mm,";
                     }

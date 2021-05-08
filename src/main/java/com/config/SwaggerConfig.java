@@ -39,7 +39,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("成都李家岩水库水雨情数据退推送 API接口文档")//大标题
+                .title("成都李家岩水库水雨情数据推送 API接口文档")//大标题
                 .description("成都李家岩水库水雨情测报数据推送系统第二版本升级")//详细描述
                 .version("2.0")//版本
                 .termsOfServiceUrl("NO terms of service")

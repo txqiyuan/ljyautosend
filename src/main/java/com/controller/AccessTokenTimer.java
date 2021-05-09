@@ -106,6 +106,7 @@ public class AccessTokenTimer {
                 robot = new Robot();
             }
             //openWehat();
+            //getwxscreen();
         } catch (AWTException e) {
             e.printStackTrace();
         }
@@ -377,7 +378,7 @@ public class AccessTokenTimer {
      * 每30秒扫描数据库，监控数据是否正常
      * @throws IOException
      */
-    //@Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     public void timerforalarm() throws Exception {
         List<Openid> openids = new ArrayList<>();
         List<MessageVo> messageVo = new ArrayList<>();
@@ -779,7 +780,7 @@ public class AccessTokenTimer {
             //1、打开微信
             process = runtime.exec(wchatexeaddr2);
             //延迟一点时间500ms,再ctrl+F搜索群名字 ljygroup
-            robot.delay(100);
+            robot.delay(500);
             robot.keyPress(KeyEvent.VK_CONTROL);
             pressKey('F');
             robot.keyRelease(KeyEvent.VK_CONTROL);
@@ -790,7 +791,7 @@ public class AccessTokenTimer {
             robot.keyPress(KeyEvent.VK_CONTROL);
             pressKey('V');
             robot.keyRelease(KeyEvent.VK_CONTROL);
-            robot.delay(2500);
+            robot.delay(2000);
             //再选中，enter进入聊天界面并获取光标
             robot.keyPress(KeyEvent.VK_ENTER);
             robot.keyRelease(KeyEvent.VK_ENTER);

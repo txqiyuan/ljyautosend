@@ -26,6 +26,20 @@ spring:
       password: 123456
       #password: 1234
       driver-class-name: com.mysql.jdbc.Driver
+      initial-size: 10
+      max-active: 30
+      #最小空闲连接
+      min-idle: 10
+      #配置获取连接等待超时的时间
+      max-wait: 60000
+      #增加数据源探活机制，检测超时链接
+      validation-query: SELECT 'x'
+      test-while-idle: true
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 3600000
+      validation-query-timeout: 5000
+      #配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
       #######监控配置
       # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
       #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
@@ -47,11 +61,11 @@ spring:
         login-username: alex
         login-password: 123456
         #允许访问-白名单，没有配置或者为空，则允许所有访问
-        allow: 127.0.0.1,192.168.5.106
+        allow: 127.0.0.1
         #禁止访问-黑名单
         deny:
       aop-patterns: com.lcf.service.*
-      #使用druid数据源
+    #使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
 
   #Redis 配置
@@ -66,8 +80,8 @@ spring:
     #Redis服务器连接密码（默认为空）
     password: alex20106364
     #连接超时时间（毫秒）
-    timeout: 1000
-    lettuce:
+    timeout: 6000
+    jedis:
       pool:
         #连接池最大连接数（使用负值表示没有限制）
         max-active: 8
@@ -76,7 +90,7 @@ spring:
         #连接池中的最大空闲连接
         max-idle: 8
         #连接池中的最小空闲连接
-        min-idle: 3
+        min-idle: 4
 
 #日志打印
 logging:

@@ -646,9 +646,9 @@ public class AccessTokenTimer {
     //每15分钟
     //@Scheduled(cron = "0 0/15 * * * ?")
     //每60分钟
-    //@Scheduled(cron = "30 1 * * * ?")
+    //@Scheduled(cron = "25 1 * * * ?")
     //每30分钟
-    //@Scheduled(cron = "30 1/30 * * * ?")
+    //@Scheduled(cron = "25 1/30 * * * ?")
     public void autosendforwechat1() throws InterruptedException {
         String alexnowcon = null;
         try {

@@ -474,90 +474,6 @@ public class AccessTokenTimer {
         }
     }
 
-    //@Scheduled(cron = "0/30 * * * * ?")
-    public void fuckljyalarm() throws Exception {
-        List<Openid> openids = new ArrayList<>();
-        MessageVo messageVo = new MessageVo();
-        //微信
-        openids = messagesService.getopenids();
-        //短信
-        List<StAlarmPerson> person = noticeService.getperson();
-        messageVo = messagesService.getvozx(AlexUtil.getTableName(new Date()));
-        AzureToken token = getWxAccessToken();
-        String phonemescon = "【四川恒宣】李家岩水库水雨情测报平台预警：";
-        if (messageVo != null ){
-            //短信预警信息
-            phonemescon += messageVo.getStname();
-            phonemescon += "水位" + messageVo.getZ() + "m, " + "流量" + getq(messageVo.getZ()) + "m³/s, " + "请注意可能发生的山洪和山体塌方等自然灾害，请做好相关防洪度汛准备！";
-            Integer issended = messagesService.issendedzx(messageVo);
-            if (issended == 0){
-                //自动发送
-                try {
-                    //将wx置于前面，防止失去焦点
-                    openWehat();
-                    copy(phonemescon);
-                    alexCtrlWithV('V');
-                    alexEnter();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                //微信推送
-
-                for (Openid x : openids){
-                    try {
-                        WxMessagesPush.pushmessagex(messageVo, token, x);
-                        messageVo.setUsername(x.getWxuser());
-                        messageVo.setPhone(x.getPhone());
-                        messageVo.setTm(new Date());
-                        messageVo.setContent(phonemescon);
-                        messagesService.addwxpushlog(messageVo);
-                    } catch (IOException e) {
-                        logger.error("wechat push failed!");
-                    }
-                }
-                //微信群发送
-
-                //短信
-                /*for (StAlarmPerson sap : person){
-                    try {
-                        String xpj = "0";
-                        String xz = "0";
-                        if (v.getPj() != null){
-                            xpj = v.getPj().toString();
-                        }
-                        if (v.getZ() != null){
-                            xz = v.getZ().toString();
-                        }
-                        PhoneMessage.SendMessage(sap.getphone(), xpj, xz);
-                        v.setId(AlexUtil.MD5());
-                        v.setPhone(sap.getphone());
-                        v.setUsername(sap.getName());
-                        v.setTm(new Date());
-                        noticeService.addmeslog(v);
-                    } catch (Exception e) {
-                        //e.printStackTrace();
-                        logger.error("phone messages push failed!");
-                    }
-                }*/
-                //集时通
-                try {
-                    PhoneMessage.messageJSTalex(person,phonemescon.replaceAll("【四川恒宣】", ""));
-                    messageVo.setId(AlexUtil.MD5());
-                    for (StAlarmPerson sap : person){
-                        messageVo.setPhone(sap.getphone());
-                        messageVo.setUsername(sap.getName());
-                        messageVo.setContent(phonemescon);
-                        messageVo.setTm(new Date());
-                        noticeService.addmeslog(messageVo);
-                    }
-                } catch (Exception e) {
-                    //e.printStackTrace();
-                    logger.error("phone messages push failed!");
-                }
-            }
-        }
-    }
 
     //--------------------------------微信自动发送--------------------------------------
 
@@ -684,7 +600,7 @@ public class AccessTokenTimer {
         if (alexonehourcon != null){
             try {
                 //将wx置于前面，防止失去焦点
-                Thread.sleep(5000);
+                Thread.sleep(2000);
                 openWehat();
                 copy(alexonehourcon);
                 alexCtrlWithV('V');
@@ -697,7 +613,7 @@ public class AccessTokenTimer {
         if (alex20tonowcon != null){
             try {
                 //将wx置于前面，防止失去焦点
-                Thread.sleep(5000);
+                Thread.sleep(2000);
                 openWehat();
                 copy(alex20tonowcon);
                 alexCtrlWithV('V');
@@ -783,18 +699,18 @@ public class AccessTokenTimer {
             //1、打开微信
             process = runtime.exec(wchatexeaddr2);
             //延迟一点时间500ms,再ctrl+F搜索群名字 ljygroup
-            robot.delay(500);
+            robot.delay(1200);
             robot.keyPress(KeyEvent.VK_CONTROL);
             pressKey('F');
             robot.keyRelease(KeyEvent.VK_CONTROL);
-            robot.delay(100);
+            robot.delay(200);
             //复制、粘贴群名称搜索
             copy(ljygroup);
             robot.delay(100);
             robot.keyPress(KeyEvent.VK_CONTROL);
             pressKey('V');
             robot.keyRelease(KeyEvent.VK_CONTROL);
-            robot.delay(2000);
+            robot.delay(1200);
             //再选中，enter进入聊天界面并获取光标
             robot.keyPress(KeyEvent.VK_ENTER);
             robot.keyRelease(KeyEvent.VK_ENTER);

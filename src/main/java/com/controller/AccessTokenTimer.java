@@ -89,17 +89,24 @@ public class AccessTokenTimer {
 
     public static final Runtime runtime = Runtime.getRuntime();
 
+    //李家岩公司防洪度汛工作群
+    public static String ljygroup = "李家岩公司防洪度汛工作群";
+
     public static String wchatexeaddr1 = "C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe";
 
     public static String wchatexeaddr2 = "F:\\app\\Tencent\\WeChat\\WeChat.exe";
+    //public static String wchatexeaddr2 = "D:\\360软件\\WeChat\\WeChat.exe";
 
     /**
      * 使用Robot类 模拟安键输入Ctrl+F和Enter查找指定用户
      */
     static {
         try {
-            if (robot == null)
+            if (robot == null){
                 robot = new Robot();
+            }
+            //openWehat();
+            //getwxscreen();
         } catch (AWTException e) {
             e.printStackTrace();
         }
@@ -139,7 +146,7 @@ public class AccessTokenTimer {
      * 定时器：需要在spring配置中开启定时任务扫描
      * 早8点
      */
-    //@Scheduled(cron = "30 1 8 * * ? ")
+    @Scheduled(cron = "20 1 8 * * ? ")
     public void timerfortask1() throws IOException {
         List<Openid> openids = new ArrayList<>();
         List<MessageVo> messageVo = new ArrayList<>();
@@ -214,7 +221,7 @@ public class AccessTokenTimer {
      * 中午两点
      * @throws IOException
      */
-    //@Scheduled(cron = "30 1 14 * * ? ")
+    @Scheduled(cron = "20 1 14 * * ? ")
     public void timerfortask2() throws IOException {
         List<Openid> openids = new ArrayList<>();
         List<MessageVo> messageVo = new ArrayList<>();
@@ -289,7 +296,7 @@ public class AccessTokenTimer {
      * 晚8点
      * @throws IOException
      */
-    //@Scheduled(cron = "30 1 20 * * ? ")
+    @Scheduled(cron = "20 1 20 * * ? ")
     public void timerfortask3() throws IOException {
         List<Openid> openids = new ArrayList<>();
         List<MessageVo> messageVo = new ArrayList<>();
@@ -595,9 +602,6 @@ public class AccessTokenTimer {
     }*/
 
     //------------------jna方式调用系统api----------------------------------------------
-    static {
-        openWehat();
-    }
 
     //此方法废弃
     public static void getwxscreen(){
@@ -767,13 +771,31 @@ public class AccessTokenTimer {
     }
 
     /**
-     * 打开微信
+     * 打开微信,通过ctrl+f搜索群名字，再enter，再ctrl+v再enter发送
      *
      */
     public static void openWehat() {
         Process process = null;
         try {
+            //1、打开微信
             process = runtime.exec(wchatexeaddr2);
+            //延迟一点时间500ms,再ctrl+F搜索群名字 ljygroup
+            robot.delay(500);
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            pressKey('F');
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            robot.delay(100);
+            //复制、粘贴群名称搜索
+            copy(ljygroup);
+            robot.delay(100);
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            pressKey('V');
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            robot.delay(2000);
+            //再选中，enter进入聊天界面并获取光标
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+            robot.delay(100);
         } catch (final Exception e) {
             logger.info("打开微信执行失败!");
         }

@@ -26,7 +26,24 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+            <!--剔除自带的lettuce、jedis，重新引入jedis-->
+            <exclusions>
+                <exclusion>
+                    <groupId>redis.clients</groupId>
+                    <artifactId>jedis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>lettuce-core</artifactId>
+                    <groupId>io.lettuce</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <!-- jedis客户端 -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -62,15 +79,17 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.38</version>
+            <version>5.1.47</version>
             <scope>runtime</scope>
         </dependency>
         <!--al数据源-->
+        <!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.1.12</version>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.22</version>
         </dependency>
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>

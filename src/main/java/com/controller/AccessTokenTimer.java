@@ -46,7 +46,7 @@ import java.util.concurrent.TimeUnit;
  * by alex 王文超
  * 2020.05.12 09:23
  */
-//@Component
+@Component
 public class AccessTokenTimer {
 
     private static Logger logger = LoggerFactory.getLogger(AccessTokenTimer.class);
@@ -371,7 +371,7 @@ public class AccessTokenTimer {
      * 每30秒扫描数据库，监控数据是否正常
      * @throws IOException
      */
-    //@Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     public void timerforalarm() throws Exception {
         List<Openid> openids = new ArrayList<>();
         List<MessageVo> messageVo = new ArrayList<>();
@@ -677,8 +677,8 @@ public class AccessTokenTimer {
         if (alexonehourcon != null){
             try {
                 //将wx置于前面，防止失去焦点
-                openWehat();
                 Thread.sleep(5000);
+                openWehat();
                 copy(alexonehourcon);
                 alexCtrlWithV('V');
                 alexEnter();
@@ -690,8 +690,8 @@ public class AccessTokenTimer {
         if (alex20tonowcon != null){
             try {
                 //将wx置于前面，防止失去焦点
-                openWehat();
                 Thread.sleep(5000);
+                openWehat();
                 copy(alex20tonowcon);
                 alexCtrlWithV('V');
                 alexEnter();

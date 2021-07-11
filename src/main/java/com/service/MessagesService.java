@@ -1,5 +1,6 @@
 package com.service;
 
+import com.model.EveryDayCon;
 import com.model.MessageVo;
 import com.model.Openid;
 import org.apache.ibatis.annotations.Param;
@@ -29,4 +30,7 @@ public interface MessagesService {
 
     MessageVo getvozx(String tableName);
 
+    Integer updatevecon(EveryDayCon edc);
+
+    EveryDayCon gettypeid(int id);
 }

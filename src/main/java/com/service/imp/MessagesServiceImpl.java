@@ -1,6 +1,7 @@
 package com.service.imp;
 
 import com.mapper.MessagesMapper;
+import com.model.EveryDayCon;
 import com.model.MessageVo;
 import com.model.Openid;
 import com.service.MessagesService;
@@ -73,5 +74,15 @@ public class MessagesServiceImpl implements MessagesService {
     @Override
     public MessageVo getvozx(String tableName) {
         return messagesMapper.getvozx(tableName);
+    }
+
+    @Override
+    public Integer updatevecon(EveryDayCon edc) {
+        return messagesMapper.updatevecon(edc);
+    }
+
+    @Override
+    public EveryDayCon gettypeid(int id) {
+        return messagesMapper.gettypeid(id);
     }
 }

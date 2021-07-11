@@ -2,10 +2,7 @@ package com.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.model.Alexhqline;
-import com.model.MessageVo;
-import com.model.Openid;
-import com.model.StAlarmPerson;
+import com.model.*;
 import com.service.MessagesService;
 import com.service.NoticeService;
 import com.sun.jna.platform.win32.User32;
@@ -211,7 +208,7 @@ public class AccessTokenTimer {
                 }
             }
             con = con + c1.replaceAll("李家岩水情-","");
-            savemes(con);
+            savemes(con,1,1);
             for (Openid op : openids){
                 WxMessagesPush.pushmessage(con, token, op);
             }
@@ -286,7 +283,7 @@ public class AccessTokenTimer {
                 }
             }
             con = con + c1.replaceAll("李家岩水情-","");
-            savemes(con);
+            savemes(con,1,1);
             for (Openid op : openids){
                 WxMessagesPush.pushmessage(con, token, op);
             }
@@ -361,7 +358,7 @@ public class AccessTokenTimer {
                 }
             }
             con = con + c1.replaceAll("李家岩水情-","");
-            savemes(con);
+            savemes(con,1,1);
             for (Openid op : openids){
                 WxMessagesPush.pushmessage(con, token, op);
             }
@@ -370,10 +367,21 @@ public class AccessTokenTimer {
         }
     }
 
-    private void savemes(String con) {
-        //加入缓存
-        redisTemplate.opsForValue().set(meskey, JSON.toJSONString(con));
-        redisTemplate.expire(meskey, 1, TimeUnit.DAYS);
+    private void savemes(String con,int id, int type) {
+        //存数据库
+        EveryDayCon edc = new EveryDayCon();
+        edc.setId(id);
+        edc.setContent(con);
+        edc.setUpdatetime(new Date());
+        messagesService.updatevecon(edc);
+        try {
+            //加入缓存
+            redisTemplate.opsForValue().set(meskey, JSON.toJSONString(con));
+            redisTemplate.expire(meskey, 1, TimeUnit.DAYS);
+        } catch (Exception e) {
+            logger.error("每日播报消息redis缓存失败...");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -381,7 +389,7 @@ public class AccessTokenTimer {
      * 每30秒扫描数据库，监控数据是否正常
      * @throws IOException
      */
-    @Scheduled(cron = "0/30 * * * * ?")
+    //@Scheduled(cron = "0/30 * * * * ?")
     public void timerforalarm() throws Exception {
         List<Openid> openids = new ArrayList<>();
         List<MessageVo> messageVo = new ArrayList<>();

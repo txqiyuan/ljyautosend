@@ -2,6 +2,7 @@ package com.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.model.Alexhqline;
+import com.model.EveryDayCon;
 import com.model.MessageVo;
 import com.service.MessagesService;
 import com.service.NoticeService;
@@ -45,8 +46,8 @@ public class AlexController {
     @ResponseBody
     public String getpushmessagesdata(HttpServletRequest request, HttpServletResponse response){
         Map<String,Object> res = new HashMap<>();
-        String alex = null;
-        try {
+        //String alex = null;
+        /*try {
             if (redisTemplate.hasKey(AccessTokenTimer.meskey)) {
                 alex = redisTemplate.opsForValue().get(AccessTokenTimer.meskey);
             }
@@ -56,10 +57,12 @@ public class AlexController {
         if (alex == null || "".equals(alex)){
             alex = "暂时还没有数据";
         }
-        alex = alex.replace("\"", "");
+        alex = alex.replace("\"", "");*/
+        //读数据库
+        EveryDayCon edc = messagesService.gettypeid(1);
         res.put("code",0);
         res.put("msg","");
-        res.put("res",alex);
+        res.put("res",edc.getContent());
         return JSONObject.toJSONString(res);
     }
 

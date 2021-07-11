@@ -44,7 +44,7 @@ public class WxMessagesPush {
         jsonObject.put("touser", pushopenid.getWxopenid());   // openid
         jsonObject.put("template_id", templeteid);
         //jsonObject.put("url", "http://117.176.184.118:9696/alex/index.html");
-        jsonObject.put("url", "http://alex.mynatapp.cc/alex/index.html");
+        jsonObject.put("url", "http://117.176.184.118:8688/alex/index.html");
 
         JSONObject data = new JSONObject();
         JSONObject alexdate = new JSONObject();

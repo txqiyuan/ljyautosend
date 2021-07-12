@@ -36,11 +36,7 @@ public interface MessagesMapper {
 
     List<MessageVo> getvoz2(@Param("tabname") String tabname);
 
-    @Update("update alex_foreveryday set content=#{content} , updatetime=#{updatetime} where id=#{id}")
-    @ResultType(Integer.class)
     Integer updatevecon(EveryDayCon edc);
 
-    @Select("select * from alex_foreveryday where id=#{id}")
-    @ResultType(EveryDayCon.class)
-    EveryDayCon gettypeid(int id);
+    EveryDayCon gettypeid(@Param("id") int id);
 }

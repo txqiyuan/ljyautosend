@@ -229,4 +229,12 @@
         values(null,#{username},#{phone},#{stcd},#{stname},#{content},#{pj},#{pn05},#{z},#{zb},#{zu},#{waterRanges},#{rainRanges},#{tm})
     </insert>
 
+    <update id="updatevecon" parameterType="com.model.EveryDayCon">
+        update alex_foreveryday set content=#{content},updatetime=#{updatetime} where id=#{id}
+    </update>
+
+    <select id="gettypeid" resultType="com.model.EveryDayCon">
+        select * from alex_foreveryday where id=#{id}
+    </select>
+
 </mapper>

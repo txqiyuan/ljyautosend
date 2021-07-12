@@ -991,7 +991,7 @@ public class AccessTokenTimer {
         return null;
     }
 
-    @Cacheable(value = "wxtoken")
+    //@Cacheable(value = "wxtoken")
     public AzureToken getWxAccessToken(){
         AzureToken accesstoken;
         try {

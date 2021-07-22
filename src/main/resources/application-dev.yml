@@ -19,11 +19,11 @@ spring:
   datasource:
     druid:
       #服务器数据库
-      url: jdbc:mysql://117.176.184.118:8366/demo_sl2.2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&autoReconnect=true
-      #url: jdbc:mysql:///demo_sl2.2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&autoReconnect=true
+      #url: jdbc:mysql://117.176.184.118:8366/demo_sl2.2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&autoReconnect=true
+      url: jdbc:mysql:///demo_sl2.2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&autoReconnect=true
       username: root
-      password: 123456
-      #password: 1234
+      #password: 123456
+      password: 1234
       driver-class-name: com.mysql.jdbc.Driver
       initial-size: 10
       max-active: 30
@@ -80,6 +80,7 @@ spring:
     port: 6379
     #Redis服务器连接密码（默认为空）
     password: alex20106364
+    #password:
     #连接超时时间（毫秒）
     timeout: 6000
     jedis:
@@ -97,8 +98,8 @@ spring:
 logging:
   file:
     name:
-    path: G:/alex/log
-    #path: D:/alex/log
+    #path: G:/alex/log
+    path: D:/alex/log
   #日志级别
   level:
     web: info

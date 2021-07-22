@@ -37,7 +37,7 @@
         resc.stnm stname, resa.tm tm from
         (SELECT id, stcd,FORMAT(IFNULL(SUM(PN05),0),1) as pj,z,vj,va,q,tm from
         (SELECT * from ${tabname} sa where
-        tm > (select date_sub(now(), interval 180 MINUTE)) and
+        tm > (select date_sub(now(), interval 60 MINUTE)) and
         tm &lt;= (select now())
         ORDER BY sa.tm DESC) sg
         GROUP BY sg.stcd) resa,
@@ -61,7 +61,7 @@
         resc.stnm stname, resa.tm tm from
         (SELECT id, stcd,FORMAT(IFNULL(SUM(PN05),0),1) as pj,z,vj,va,q,tm from
         (SELECT * from ${tabname} sa where
-        tm > (select date_sub(now(), interval 180 MINUTE)) and
+        tm > (select date_sub(now(), interval 60 MINUTE)) and
         tm &lt;= (select now())
         ORDER BY sa.tm DESC) sg
         GROUP BY sg.stcd) resa,

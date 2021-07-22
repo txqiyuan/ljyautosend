@@ -5,7 +5,7 @@ spring.thymeleaf.prefix: classpath:/templates/
 spring:
   #dev|test|pro
   profiles:
-    active: dev
+    active: pro
   #servlet设置
   servlet:
     multipart:

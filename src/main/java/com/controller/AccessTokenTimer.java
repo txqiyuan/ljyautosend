@@ -386,17 +386,17 @@ public class AccessTokenTimer {
 
     /**
      * 预警扫描
-     * 每30秒扫描数据库，监控数据是否正常
+     * 每30秒扫描数据库，监控数据是否正常,1h数据预警
      * @throws IOException
      */
-    //@Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     public void timerforalarm() throws Exception {
         List<Openid> openids = new ArrayList<>();
         List<MessageVo> messageVo = new ArrayList<>();
         List<StAlarmPerson> person = new ArrayList<>();
         //预警
         messageVo = messagesService.getvopjz1(AlexUtil.getTableName(new Date()));
-        String wxmescon = "【四川恒宣】李家岩水库水雨情测报平台预警(3小时)提示：当前时间 " + AlexUtil.formatDatealex(new Date()) + " : ";
+        String wxmescon = "【四川恒宣】李家岩水库水雨情测报平台预警(1小时)发布：当前时间 " + AlexUtil.formatDatealex(new Date()) + " : ";
         String wxx = wxmescon;
         if (messageVo != null && messageVo.size() > 0){
             AzureToken token = getWxAccessToken();
@@ -405,11 +405,11 @@ public class AccessTokenTimer {
             for(MessageVo v : messageVo){
                 //微信群推送  content
                 if ("0066668806".equals(v.getStcd())){
-                    wxmescon += v.getStname() + "水位" + v.getZ() + "m, " + "雨量" + v.getPj() + "mm," + "流量" + getq(v.getZ()) + "m³/s " + "(预警值: 水位" + v.getWaterRanges() + "m,雨量" + v.getRainRanges() + "mm)," + "请注意可能发生的山洪和山体塌方等自然灾害，请做好相关防洪度汛准备！";
+                    wxmescon += v.getStname() + "水位" + v.getZ() + "m, " + "雨量" + v.getPj() + "mm," + "流量" + getq(v.getZ()) + "m³/s " + "(预警阈值: 水位" + v.getWaterRanges() + "m,雨量" + v.getRainRanges() + "mm)," + "请注意可能发生的山洪及其次生灾害，请做好相关防洪度汛准备！";
                 }else if ("0066668805".equals(v.getStcd())){
-                    wxmescon += v.getStname() + "水位" + v.getZ() + "m," + "雨量" + v.getPj() + "mm "+ "(预警值: 水位" + v.getWaterRanges() + "m,雨量" + v.getRainRanges() + "mm)," + "请注意可能发生的山洪和山体塌方等自然灾害，请做好相关防洪度汛准备！";
+                    wxmescon += v.getStname() + "水位" + gettwoq(v.getZ()) + "m," + "雨量" + v.getPj() + "mm "+ "(预警阈值: 水位" + v.getWaterRanges() + "m,雨量" + v.getRainRanges() + "mm)," + "请注意可能发生的山洪及其次生灾害，请做好相关防洪度汛准备！";
                 }else {
-                    wxmescon += v.getStname() + "雨量" + v.getPj() + "mm " + "(预警值:雨量" + v.getRainRanges() + "mm)," + "请注意可能发生的山洪和山体塌方等自然灾害，请做好相关防洪度汛准备！";
+                    wxmescon += v.getStname() + "雨量" + v.getPj() + "mm " + "(预警阈值:雨量" + v.getRainRanges() + "mm)," + "请注意可能发生的山洪及其次生灾害，请做好相关防洪度汛准备！";
                 }
 
                 Integer issended = messagesService.issended(v);
@@ -564,15 +564,15 @@ public class AccessTokenTimer {
     //每3分钟
     //@Scheduled(cron = "0 0/3 * * * ?")
     //每5分钟
-    //@Scheduled(cron = "0 1/5 * * * ?")
+    //@Scheduled(cron = "20 1/5 * * * ?")
     //每10分钟
-    //@Scheduled(cron = "0 1/10 * * * ?")
+    //@Scheduled(cron = "20 1/10 * * * ?")
     //每15分钟
     //@Scheduled(cron = "0 0/15 * * * ?")
     //每60分钟
-    //@Scheduled(cron = "25 1 * * * ?")
+    //@Scheduled(cron = "20 1 * * * ?")
     //每30分钟
-    //@Scheduled(cron = "25 1/30 * * * ?")
+    //@Scheduled(cron = "20 1/30 * * * ?")
     public void autosendforwechat1() throws InterruptedException {
         String alexnowcon = null;
         try {
@@ -991,7 +991,7 @@ public class AccessTokenTimer {
         return null;
     }
 
-    //@Cacheable(value = "wxtoken")
+    @Cacheable(value = "wxtoken")
     public AzureToken getWxAccessToken(){
         AzureToken accesstoken;
         try {

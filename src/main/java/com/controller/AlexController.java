@@ -47,7 +47,7 @@ public class AlexController {
     public String getpushmessagesdata(HttpServletRequest request, HttpServletResponse response){
         Map<String,Object> res = new HashMap<>();
         String alex = null;
-        /*try {
+        try {
             if (redisTemplate.hasKey(AccessTokenTimer.meskey)) {
                 alex = redisTemplate.opsForValue().get(AccessTokenTimer.meskey);
             }
@@ -55,15 +55,14 @@ public class AlexController {
             logger.error("redis connection failed!");
         }
         if (alex == null || "".equals(alex)){
-            alex = "暂时还没有数据";
+            //读数据库
+            EveryDayCon edc = messagesService.gettypeid(1);
+            alex=edc.getContent();
+            if (alex == null || "".equals(alex)){
+                alex = "暂时还没有数据";
+            }
         }
-        alex = alex.replace("\"", "");*/
-        //读数据库
-        EveryDayCon edc = messagesService.gettypeid(1);
-        alex=edc.getContent();
-        if (alex == null || "".equals(alex)){
-            alex = "暂时还没有数据";
-        }
+        alex = alex.replace("\"", "");
         res.put("code",0);
         res.put("msg","");
         res.put("res",alex);

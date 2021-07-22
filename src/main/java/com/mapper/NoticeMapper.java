@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Mapper
+@Repository
 public interface NoticeMapper {
 
     List<MessageVo> getlist(@Param("tabname") String tabname);

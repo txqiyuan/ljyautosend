@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -99,15 +100,15 @@ public class WxMessagesPush {
         alexdate.put("color", "#157efb");
         alexid.put("value", msv.getStcd());
         alexid.put("color", "#157efb");
-        alexname.put("value", msv.getStname());
+        alexname.put("value", msv.getStname() + "");
         alexname.put("color", "#157efb");
-        alexrain.put("value", msv.getPj());
+        alexrain.put("value", getoneq(msv.getPj()) + "");
         alexrain.put("color", "#FFA500");
-        alexrainal.put("value", msv.getRainRanges());
+        alexrainal.put("value", getoneq(msv.getRainRanges()) + "");
         alexrainal.put("color", "#FFA500");
-        alexwater.put("value", msv.getZ());
+        alexwater.put("value", gettwoq(msv.getZ()) + "");
         alexwater.put("color", "#FFA500");
-        alexwateral.put("value", msv.getWaterRanges());
+        alexwateral.put("value", gettwoq(msv.getWaterRanges()) + "");
         alexwateral.put("color", "#FFA500");
         String tip = msv.getContent();
         //String tipen = "Please handle the order checking and delivery in time ... if you already know, please ignore it!!!";
@@ -136,6 +137,18 @@ public class WxMessagesPush {
             // 发送失败
             System.out.println("发送失败");
         }
+    }
+
+    public static Double gettwoq(Double q){
+        BigDecimal bg = new BigDecimal(q);
+        double f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return f1;
+    }
+
+    public static Double getoneq(Double q){
+        BigDecimal bg = new BigDecimal(q);
+        double f1 = bg.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return f1;
     }
 
     public static void main(String[] args) throws IOException {
